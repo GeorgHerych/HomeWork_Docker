@@ -1,0 +1,6 @@
+services:
+  cinemawebapprp_pvl321:
+    image: ${DOCKER_REGISTRY-}cinemawebapprppvl321
+    build:
+      context: .
+      dockerfile: CinemaWebAppRP_PVl321/Dockerfile

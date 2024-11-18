@@ -1,0 +1,68 @@
+﻿@page  
+@* https://localhost:7012/Ukraine/Rivne
+https://localhost:7012/Index/Ukraine *@
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+
+
+}
+
+
+@* https://localhost:7012/Index?cinema=Ukraine&city=Rivne *@
+<h3> @Model.Cinema</h3>
+@* <h2>@Request.Query["city"]</h2> *@
+<h2>@(RouteData.Values["cinema"])</h2>
+<div class="text-center">
+    <h2 class="display-4">@Model.Message</h2>
+    <h2 class="display-4">Cinema</h2>
+  @*   <form method="get">
+        <input type="type" name="searchmovie"  />
+        <button type="submit" class="btn btn-primary">SearchByTitle</button>
+    </form> *@
+
+    <form method="post">
+        <input type="type" name="searchmovie" />
+        <button asp-page-handler="Clear">ClearFilter</button>
+        <button asp-page-handler="SearchTitle">SearchByTitle</button>
+        <button asp-page-handler="SearchStyle">SearchByStyle</button>
+    </form>
+
+    @* <p><a class="link-opacity-100" href="./Movies/Create">Create</a></p> *@
+    <p><a class="link-opacity-100" href="Movies/Create">Create</a></p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Director</th>
+                <th scope="col">Style</th>
+                <th scope="col">Detail</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model.Movies)
+            {
+                <tr>
+                <th scope="row">@movie.Id</th>
+                <td>@movie.Title</td>
+                <td>@movie.Director</td>
+                    <td>@movie.Style</td>
+                    @* <td><a href="./Movies/InfoMovie/@movie.Id">FullInfo</a></td> *@
+                    <td><a asp-page="Movies/InfoMovie" asp-route-id="@movie.Id">FullInfo</a></td>
+                    <td><a asp-page="Movies/Edit" asp-route-id="@movie.Id">Edit</a></td>
+                   <td>
+                    <form method="post"   asp-route-id="@movie.Id">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                    </td>
+                   
+
+            </tr>
+            }
+           
+        </tbody>
+    </table>
+</div>
